@@ -59,12 +59,26 @@ def getAllLoans(request):
             return Response(newLoan.data)
         return Response(newLoan.errors)
 
-@api_view(['GET'])
+@api_view(['GET','PATCH','DELETE'])
 def getCategory(request,catid):
-    category = Category.objects.get(CatID=catid)
-    serializers = CategorySerializers(category, many=False)
-    return Response(serializers.data)
+    try:
+        category = Category.objects.get(CatID=catid)
+    except category.DoesNotExist:
+        return Response({'error': 'Item not found'})
+    
+    if request.method == 'GET':
+        serializers = CategorySerializers(category, many=False)
 
+    # category = Category.objects.get(CatID=catid)
+        return Response(serializers.data)
+    elif request.method == 'PATCH':
+        serializers = CategorySerializers(category,data=request.data,partial= True)
+
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data)
+        return  Response(serializers.errors)
+    
 @api_view(['GET'])
 def getGenArticle(request,detartid):
     category = Category.objects.get(CatID=detartid)
