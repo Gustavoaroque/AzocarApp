@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import *
-from .serializers import *
+from .models import Category, GeneralArticle, DetailArticle, Loan
+from .serializers import CategorySerializers, GeneralArticleSerializers,DetailArticleSerializer,LoanSerializers
 
 
 @api_view(['GET','POST'])

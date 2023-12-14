@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from Bodega.models import *
+from Bodega.models import GeneralArticle, DetailArticle, Loan,Category
 
 class CategorySerializers(serializers.ModelSerializer):
     class Meta: 
